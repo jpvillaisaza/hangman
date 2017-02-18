@@ -238,7 +238,7 @@ view model =
         , viewStats model
         , Html.h2 [] [ Html.text (toStringL model) ]
         , Html.p [] [Html.text (toString model.status)]
-        , Html.p [] (if model.status == Lost then [Html.text model.word] else [])
+        , Html.p [] (if model.status == Lost || model.status == Won then [viewWord model] else [])
         , Html.p [] [Html.text (Set.foldr String.cons "" model.guesses)]
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
         , viewKeyboard
@@ -328,3 +328,19 @@ viewStats model =
         [ Html.text ("Wins: " ++ toString model.wins)
         , Html.text (" (" ++ toString model.games ++ ")")
         ]
+
+
+viewWord : Model -> Html msg
+viewWord model =
+    let
+        base =
+            case model.language of
+                English ->
+                    "https://en.oxforddictionaries.com/definition/us/"
+
+                Spanish ->
+                    "http://dirae.es/palabras/"
+    in
+        Html.a
+            [ Html.Attributes.href (base ++ model.word) ]
+            [ Html.text model.word ]
