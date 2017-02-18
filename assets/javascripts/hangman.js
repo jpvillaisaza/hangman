@@ -10386,19 +10386,41 @@ var _jpvillaisaza$hangman$Hangman$viewLanguage = function (currentLanguage) {
 		}
 	}();
 	var nextLanguage = _p9._0;
-	var msg = _p9._1;
+	var nextLanguageText = _p9._1;
+	var currentLanguageText = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'Current language: ',
+		_elm_lang$core$Basics$toString(currentLanguage));
 	return A2(
-		_elm_lang$html$Html$button,
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Events$onClick(
-				_jpvillaisaza$hangman$Hangman$SwitchTo(nextLanguage)),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(msg),
-			_1: {ctor: '[]'}
+			_0: A2(
+				_elm_lang$html$Html$p,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(currentLanguageText),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_jpvillaisaza$hangman$Hangman$SwitchTo(nextLanguage)),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(nextLanguageText),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _jpvillaisaza$hangman$Hangman$Restart = {ctor: 'Restart'};

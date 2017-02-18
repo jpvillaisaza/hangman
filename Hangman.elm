@@ -243,7 +243,10 @@ viewFooter _ =
 viewLanguage : Language -> Html Msg
 viewLanguage currentLanguage =
     let
-        (nextLanguage, msg) =
+        currentLanguageText =
+            "Current language: " ++ toString currentLanguage
+
+        (nextLanguage, nextLanguageText) =
             case currentLanguage of
                 English ->
                     (Spanish, "Cambiar a español")
@@ -252,9 +255,15 @@ viewLanguage currentLanguage =
                     (English, "Switch to English")
 
     in
-        Html.button
-            [ Html.Events.onClick (SwitchTo nextLanguage) ]
-            [ Html.text msg ]
+        Html.div
+            []
+            [ Html.p
+                  []
+                  [ Html.text currentLanguageText ]
+            , Html.button
+                  [ Html.Events.onClick (SwitchTo nextLanguage) ]
+                  [ Html.text nextLanguageText ]
+            ]
 
 
 viewStats : Model -> Html msg
