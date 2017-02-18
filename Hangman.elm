@@ -203,10 +203,10 @@ view model =
     div []
         [ Html.h1 [] [ Html.text "Hangman" ]
         , viewStats model
-        , Html.h3 [] [ Html.text (toStringL model) ]
-        , Html.div [] [Html.text (toString model.status)]
-        , Html.div [] (if model.status == Lost then [Html.text model.word] else [])
-        , Html.div [] [Html.text (Set.foldr String.cons "" model.guesses)]
+        , Html.h2 [] [ Html.text (toStringL model) ]
+        , Html.p [] [Html.text (toString model.status)]
+        , Html.p [] (if model.status == Lost then [Html.text model.word] else [])
+        , Html.p [] [Html.text (Set.foldr String.cons "" model.guesses)]
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
         , viewLanguage model.language
         , viewFooter model
@@ -236,7 +236,7 @@ viewFooter _ =
     in
         Html.footer
             [ Html.Attributes.class "footer" ]
-            [ Html.div [] [ repositoryLink ]
+            [ Html.p [] [ repositoryLink ]
             ]
 
 

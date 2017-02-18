@@ -10251,7 +10251,7 @@ var _jpvillaisaza$hangman$Hangman$viewFooter = function (_p0) {
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$div,
+				_elm_lang$html$Html$p,
 				{ctor: '[]'},
 				{
 					ctor: '::',
@@ -10444,7 +10444,7 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$h3,
+						_elm_lang$html$Html$h2,
 						{ctor: '[]'},
 						{
 							ctor: '::',
@@ -10455,7 +10455,7 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$div,
+							_elm_lang$html$Html$p,
 							{ctor: '[]'},
 							{
 								ctor: '::',
@@ -10466,7 +10466,7 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$div,
+								_elm_lang$html$Html$p,
 								{ctor: '[]'},
 								_elm_lang$core$Native_Utils.eq(model.status, _jpvillaisaza$hangman$Hangman$Lost) ? {
 									ctor: '::',
@@ -10476,7 +10476,7 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$div,
+									_elm_lang$html$Html$p,
 									{ctor: '[]'},
 									{
 										ctor: '::',
