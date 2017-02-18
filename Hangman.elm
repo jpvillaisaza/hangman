@@ -241,6 +241,7 @@ view model =
         , Html.p [] (if model.status == Lost then [Html.text model.word] else [])
         , Html.p [] [Html.text (Set.foldr String.cons "" model.guesses)]
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
+        , viewKeyboard
         , viewLanguage model.language
         , viewFooter model
         ]
@@ -271,6 +272,27 @@ viewFooter _ =
             [ Html.Attributes.class "footer" ]
             [ Html.p [] [ repositoryLink ]
             ]
+
+
+viewKeyboard : Html Msg
+viewKeyboard =
+    let
+        letters_ =
+            List.range (Char.toCode 'a') (Char.toCode 'n')
+                ++
+                Char.toCode 'ñ' :: List.range (Char.toCode 'o') (Char.toCode 'z')
+        letters =
+            List.map Char.fromCode letters_
+
+        sd letter =
+            Html.button
+                [ Html.Attributes.class "btn btn-default"
+                , Html.Events.onClick (Guess letter)
+                ]
+                [ Html.text (String.fromChar letter) ]
+
+    in
+        Html.div [] (List.map sd letters)
 
 
 viewLanguage : Language -> Html Msg

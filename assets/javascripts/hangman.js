@@ -10475,97 +10475,6 @@ var _jpvillaisaza$hangman$Hangman$viewLanguage = function (currentLanguage) {
 		});
 };
 var _jpvillaisaza$hangman$Hangman$Restart = {ctor: 'Restart'};
-var _jpvillaisaza$hangman$Hangman$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$h1,
-				{ctor: '[]'},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text('Hangman'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
-				ctor: '::',
-				_0: _jpvillaisaza$hangman$Hangman$viewStats(model),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$h2,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(
-								_jpvillaisaza$hangman$Hangman$toStringL(model)),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$p,
-							{ctor: '[]'},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(
-									_elm_lang$core$Basics$toString(model.status)),
-								_1: {ctor: '[]'}
-							}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$p,
-								{ctor: '[]'},
-								_elm_lang$core$Native_Utils.eq(model.status, _jpvillaisaza$hangman$Hangman$Lost) ? {
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(model.word),
-									_1: {ctor: '[]'}
-								} : {ctor: '[]'}),
-							_1: {
-								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$p,
-									{ctor: '[]'},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(
-											A3(_elm_lang$core$Set$foldr, _elm_lang$core$String$cons, '', model.guesses)),
-										_1: {ctor: '[]'}
-									}),
-								_1: {
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$button,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(_jpvillaisaza$hangman$Hangman$Restart),
-											_1: {ctor: '[]'}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Restart'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {
-										ctor: '::',
-										_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
-										_1: {
-											ctor: '::',
-											_0: _jpvillaisaza$hangman$Hangman$viewFooter(model),
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		});
-};
 var _jpvillaisaza$hangman$Hangman$New = function (a) {
 	return {ctor: 'New', _0: a};
 };
@@ -10666,6 +10575,147 @@ var _jpvillaisaza$hangman$Hangman$subscriptions = function (model) {
 			return _jpvillaisaza$hangman$Hangman$Guess(
 				_elm_lang$core$Char$fromCode(_p14));
 		}) : _elm_lang$core$Platform_Sub$none;
+};
+var _jpvillaisaza$hangman$Hangman$viewKeyboard = function () {
+	var sd = function (letter) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('btn btn-default'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(
+						_jpvillaisaza$hangman$Hangman$Guess(letter)),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$String$fromChar(letter)),
+				_1: {ctor: '[]'}
+			});
+	};
+	var letters_ = A2(
+		_elm_lang$core$Basics_ops['++'],
+		A2(
+			_elm_lang$core$List$range,
+			_elm_lang$core$Char$toCode(
+				_elm_lang$core$Native_Utils.chr('a')),
+			_elm_lang$core$Char$toCode(
+				_elm_lang$core$Native_Utils.chr('n'))),
+		{
+			ctor: '::',
+			_0: _elm_lang$core$Char$toCode(
+				_elm_lang$core$Native_Utils.chr('ñ')),
+			_1: A2(
+				_elm_lang$core$List$range,
+				_elm_lang$core$Char$toCode(
+					_elm_lang$core$Native_Utils.chr('o')),
+				_elm_lang$core$Char$toCode(
+					_elm_lang$core$Native_Utils.chr('z')))
+		});
+	var letters = A2(_elm_lang$core$List$map, _elm_lang$core$Char$fromCode, letters_);
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		A2(_elm_lang$core$List$map, sd, letters));
+}();
+var _jpvillaisaza$hangman$Hangman$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Hangman'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _jpvillaisaza$hangman$Hangman$viewStats(model),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$h2,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_jpvillaisaza$hangman$Hangman$toStringL(model)),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$p,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									_elm_lang$core$Basics$toString(model.status)),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$p,
+								{ctor: '[]'},
+								_elm_lang$core$Native_Utils.eq(model.status, _jpvillaisaza$hangman$Hangman$Lost) ? {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(model.word),
+									_1: {ctor: '[]'}
+								} : {ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$p,
+									{ctor: '[]'},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text(
+											A3(_elm_lang$core$Set$foldr, _elm_lang$core$String$cons, '', model.guesses)),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_jpvillaisaza$hangman$Hangman$Restart),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Restart'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: _jpvillaisaza$hangman$Hangman$viewKeyboard,
+										_1: {
+											ctor: '::',
+											_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
+											_1: {
+												ctor: '::',
+												_0: _jpvillaisaza$hangman$Hangman$viewFooter(model),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
 };
 var _jpvillaisaza$hangman$Hangman$main = _elm_lang$html$Html$program(
 	{
