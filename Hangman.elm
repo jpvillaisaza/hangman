@@ -21,9 +21,29 @@ main =
         }
 
 
-getWords : Http.Request String
-getWords =
-    Http.getString "dict/spanish"
+englishDictionary : String
+englishDictionary =
+    "dict/english"
+
+
+spanishDictionary : String
+spanishDictionary =
+    "dict/spanish"
+
+
+getWords : Language -> Http.Request String
+getWords language =
+    let
+        dictionary =
+            case language of
+                English ->
+                    englishDictionary
+
+                Spanish ->
+                    spanishDictionary
+
+    in
+        Http.getString dictionary
 
 
 type alias Model =
@@ -80,7 +100,7 @@ init word =
             }
     in
         ( model
-        , Http.send Dict getWords
+        , Http.send Dict (getWords model.language)
         )
 
 
@@ -89,6 +109,7 @@ type Msg
     | Dict (Result Http.Error String)
     | New String
     | Restart
+    | SwitchTo Language
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -118,7 +139,12 @@ update msg model =
 
         Restart ->
             ( model
-            , Http.send Dict getWords
+            , Http.send Dict (getWords model.language)
+            )
+
+        SwitchTo language ->
+            ( { model | language = language }
+            , Http.send Dict (getWords language)
             )
 
 
@@ -175,7 +201,7 @@ view model =
         , Html.div [] (if model.status == Lost then [Html.text model.word] else [])
         , Html.div [] [Html.text (Set.foldr String.cons "" model.guesses)]
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
-        , Html.div [] [Html.text (toString model.language)]
+        , viewLanguage model.language
         ]
 
 
@@ -187,3 +213,20 @@ toStringL model =
     in
         List.map fromLetter model.letters
             |> List.foldr String.cons ""
+
+
+viewLanguage : Language -> Html Msg
+viewLanguage currentLanguage =
+    let
+        (nextLanguage, msg) =
+            case currentLanguage of
+                English ->
+                    (Spanish, "Cambiar a español")
+
+                Spanish ->
+                    (English, "Switch to English")
+
+    in
+        Html.button
+            [ Html.Events.onClick (SwitchTo nextLanguage) ]
+            [ Html.text msg ]
