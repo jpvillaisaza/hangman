@@ -202,6 +202,7 @@ view model =
         , Html.div [] [Html.text (Set.foldr String.cons "" model.guesses)]
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
         , viewLanguage model.language
+        , viewFooter model
         ]
 
 
@@ -213,6 +214,23 @@ toStringL model =
     in
         List.map fromLetter model.letters
             |> List.foldr String.cons ""
+
+
+viewFooter : Model -> Html msg
+viewFooter _ =
+    let
+        repository =
+            "https://github.com/jpvillaisaza/hangman"
+
+        repositoryLink =
+            Html.a
+                [ Html.Attributes.href repository ]
+                [ Html.text repository ]
+    in
+        Html.footer
+            [ Html.Attributes.class "footer" ]
+            [ Html.div [] [ repositoryLink ]
+            ]
 
 
 viewLanguage : Language -> Html Msg
