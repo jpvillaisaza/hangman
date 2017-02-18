@@ -10202,6 +10202,31 @@ var _elm_lang$keyboard$Keyboard$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Keyboard'] = {pkg: 'elm-lang/keyboard', init: _elm_lang$keyboard$Keyboard$init, onEffects: _elm_lang$keyboard$Keyboard$onEffects, onSelfMsg: _elm_lang$keyboard$Keyboard$onSelfMsg, tag: 'sub', subMap: _elm_lang$keyboard$Keyboard$subMap};
 
+var _jpvillaisaza$hangman$Hangman$viewStats = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Wins: ',
+					_elm_lang$core$Basics$toString(model.wins))),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' (',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(model.games),
+							')'))),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _jpvillaisaza$hangman$Hangman$viewFooter = function (_p0) {
 	var repository = 'https://github.com/jpvillaisaza/hangman';
 	var repositoryLink = A2(
@@ -10283,9 +10308,9 @@ var _jpvillaisaza$hangman$Hangman$getWords = function (language) {
 	}();
 	return _elm_lang$http$Http$getString(dictionary);
 };
-var _jpvillaisaza$hangman$Hangman$Model = F5(
-	function (a, b, c, d, e) {
-		return {guesses: a, language: b, letters: c, status: d, word: e};
+var _jpvillaisaza$hangman$Hangman$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {games: a, guesses: b, language: c, letters: d, status: e, wins: f, word: g};
 	});
 var _jpvillaisaza$hangman$Hangman$Letter = F2(
 	function (a, b) {
@@ -10341,9 +10366,11 @@ var _jpvillaisaza$hangman$Hangman$guess = F2(
 		return _elm_lang$core$Native_Utils.update(
 			model,
 			{
+				games: (_elm_lang$core$Native_Utils.eq(status, _jpvillaisaza$hangman$Hangman$Won) || _elm_lang$core$Native_Utils.eq(status, _jpvillaisaza$hangman$Hangman$Lost)) ? (model.games + 1) : model.games,
 				guesses: A2(_elm_lang$core$Set$insert, guess, model.guesses),
 				letters: letters,
-				status: status
+				status: status,
+				wins: _elm_lang$core$Native_Utils.eq(status, _jpvillaisaza$hangman$Hangman$Won) ? (model.wins + 1) : model.wins
 			});
 	});
 var _jpvillaisaza$hangman$Hangman$SwitchTo = function (a) {
@@ -10391,24 +10418,16 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$h3,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(
-							_jpvillaisaza$hangman$Hangman$toStringL(model)),
-						_1: {ctor: '[]'}
-					}),
+				_0: _jpvillaisaza$hangman$Hangman$viewStats(model),
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$div,
+						_elm_lang$html$Html$h3,
 						{ctor: '[]'},
 						{
 							ctor: '::',
 							_0: _elm_lang$html$Html$text(
-								_elm_lang$core$Basics$toString(model.status)),
+								_jpvillaisaza$hangman$Hangman$toStringL(model)),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
@@ -10416,43 +10435,55 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 						_0: A2(
 							_elm_lang$html$Html$div,
 							{ctor: '[]'},
-							_elm_lang$core$Native_Utils.eq(model.status, _jpvillaisaza$hangman$Hangman$Lost) ? {
+							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text(model.word),
+								_0: _elm_lang$html$Html$text(
+									_elm_lang$core$Basics$toString(model.status)),
 								_1: {ctor: '[]'}
-							} : {ctor: '[]'}),
+							}),
 						_1: {
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$div,
 								{ctor: '[]'},
-								{
+								_elm_lang$core$Native_Utils.eq(model.status, _jpvillaisaza$hangman$Hangman$Lost) ? {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text(
-										A3(_elm_lang$core$Set$foldr, _elm_lang$core$String$cons, '', model.guesses)),
+									_0: _elm_lang$html$Html$text(model.word),
 									_1: {ctor: '[]'}
-								}),
+								} : {ctor: '[]'}),
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_elm_lang$html$Html$div,
+									{ctor: '[]'},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(_jpvillaisaza$hangman$Hangman$Restart),
-										_1: {ctor: '[]'}
-									},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text('Restart'),
+										_0: _elm_lang$html$Html$text(
+											A3(_elm_lang$core$Set$foldr, _elm_lang$core$String$cons, '', model.guesses)),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
-									_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_jpvillaisaza$hangman$Hangman$Restart),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Restart'),
+											_1: {ctor: '[]'}
+										}),
 									_1: {
 										ctor: '::',
-										_0: _jpvillaisaza$hangman$Hangman$viewFooter(model),
-										_1: {ctor: '[]'}
+										_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
+										_1: {
+											ctor: '::',
+											_0: _jpvillaisaza$hangman$Hangman$viewFooter(model),
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}
@@ -10470,10 +10501,12 @@ var _jpvillaisaza$hangman$Hangman$Dict = function (a) {
 };
 var _jpvillaisaza$hangman$Hangman$init = function (word) {
 	var model = {
+		games: 0,
 		guesses: _elm_lang$core$Set$empty,
 		language: _jpvillaisaza$hangman$Hangman$Spanish,
 		letters: _jpvillaisaza$hangman$Hangman$toLetters(word),
 		status: _jpvillaisaza$hangman$Hangman$Playing(5),
+		wins: 0,
 		word: word
 	};
 	return {
@@ -10529,7 +10562,9 @@ var _jpvillaisaza$hangman$Hangman$update = F2(
 			case 'Restart':
 				return {
 					ctor: '_Tuple2',
-					_0: model,
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{games: model.games + 1}),
 					_1: A2(
 						_elm_lang$http$Http$send,
 						_jpvillaisaza$hangman$Hangman$Dict,

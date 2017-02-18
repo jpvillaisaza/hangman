@@ -47,10 +47,12 @@ getWords language =
 
 
 type alias Model =
-    { guesses : Set Char
+    { games : Int
+    , guesses : Set Char
     , language : Language
     , letters : List Letter
     , status : Status
+    , wins : Int
     , word : String
     }
 
@@ -92,10 +94,12 @@ init : String -> (Model, Cmd Msg)
 init word =
     let
         model =
-            { guesses = Set.empty
+            { games = 0
+            , guesses = Set.empty
             , language = Spanish
             , letters = toLetters word
             , status = Playing 5
+            , wins = 0
             , word = word
             }
     in
@@ -138,7 +142,7 @@ update msg model =
 
 
         Restart ->
-            ( model
+            ( { model | games = model.games + 1 }
             , Http.send Dict (getWords model.language)
             )
 
@@ -178,9 +182,11 @@ guess guess model =
                     model.status
     in
         { model
-            | guesses = Set.insert guess model.guesses
+            | games = if status == Won || status == Lost then model.games + 1 else model.games
+            , guesses = Set.insert guess model.guesses
             , letters = letters
             , status = status
+            , wins = if status == Won then model.wins + 1 else model.wins
         }
 
 
@@ -196,6 +202,7 @@ view : Model -> Html Msg
 view model =
     div []
         [ Html.h1 [] [ Html.text "Hangman" ]
+        , viewStats model
         , Html.h3 [] [ Html.text (toStringL model) ]
         , Html.div [] [Html.text (toString model.status)]
         , Html.div [] (if model.status == Lost then [Html.text model.word] else [])
@@ -248,3 +255,12 @@ viewLanguage currentLanguage =
         Html.button
             [ Html.Events.onClick (SwitchTo nextLanguage) ]
             [ Html.text msg ]
+
+
+viewStats : Model -> Html msg
+viewStats model =
+    Html.div
+        []
+        [ Html.text ("Wins: " ++ toString model.wins)
+        , Html.text (" (" ++ toString model.games ++ ")")
+        ]
