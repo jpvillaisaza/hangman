@@ -23,7 +23,7 @@ main =
 
 getWords : Http.Request String
 getWords =
-    Http.getString "palabras.txt"
+    Http.getString "dict/spanish"
 
 
 type alias Model =
