@@ -157,7 +157,7 @@ guess guess model =
     let
         match guess {guessed, letter} =
             { letter = letter
-            , guessed = guess == letter || guessed
+            , guessed = checkLetter guess letter || guessed
             }
 
         letters =
@@ -188,6 +188,39 @@ guess guess model =
             , status = status
             , wins = if status == Won then model.wins + 1 else model.wins
         }
+
+
+checkLetter : Char -> Char -> Bool
+checkLetter letter1_ letter2_ =
+    let
+        letter1 =
+            Char.toLower letter1_
+
+        letter2 =
+            Char.toLower letter2_
+
+        lettersA =
+            ['a', 'á']
+
+        lettersE =
+            ['e', 'é']
+
+        lettersI =
+            ['i', 'í']
+
+        lettersO =
+            ['o', 'ó']
+
+        lettersU =
+            ['u', 'ú']
+
+    in
+        letter1 == letter2
+            || List.member letter1 lettersA && List.member letter2 lettersA
+            || List.member letter1 lettersE && List.member letter2 lettersE
+            || List.member letter1 lettersI && List.member letter2 lettersI
+            || List.member letter1 lettersO && List.member letter2 lettersO
+            || List.member letter1 lettersU && List.member letter2 lettersU
 
 
 subscriptions : Model -> Sub Msg

@@ -10272,6 +10272,57 @@ var _jpvillaisaza$hangman$Hangman$toStringL = function (model) {
 		'',
 		A2(_elm_lang$core$List$map, fromLetter, model.letters));
 };
+var _jpvillaisaza$hangman$Hangman$checkLetter = F2(
+	function (letter1_, letter2_) {
+		var lettersU = {
+			ctor: '::',
+			_0: _elm_lang$core$Native_Utils.chr('u'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr('ú'),
+				_1: {ctor: '[]'}
+			}
+		};
+		var lettersO = {
+			ctor: '::',
+			_0: _elm_lang$core$Native_Utils.chr('o'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr('ó'),
+				_1: {ctor: '[]'}
+			}
+		};
+		var lettersI = {
+			ctor: '::',
+			_0: _elm_lang$core$Native_Utils.chr('i'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr('í'),
+				_1: {ctor: '[]'}
+			}
+		};
+		var lettersE = {
+			ctor: '::',
+			_0: _elm_lang$core$Native_Utils.chr('e'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr('é'),
+				_1: {ctor: '[]'}
+			}
+		};
+		var lettersA = {
+			ctor: '::',
+			_0: _elm_lang$core$Native_Utils.chr('a'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr('á'),
+				_1: {ctor: '[]'}
+			}
+		};
+		var letter2 = _elm_lang$core$Char$toLower(letter2_);
+		var letter1 = _elm_lang$core$Char$toLower(letter1_);
+		return _elm_lang$core$Native_Utils.eq(letter1, letter2) || ((A2(_elm_lang$core$List$member, letter1, lettersA) && A2(_elm_lang$core$List$member, letter2, lettersA)) || ((A2(_elm_lang$core$List$member, letter1, lettersE) && A2(_elm_lang$core$List$member, letter2, lettersE)) || ((A2(_elm_lang$core$List$member, letter1, lettersI) && A2(_elm_lang$core$List$member, letter2, lettersI)) || ((A2(_elm_lang$core$List$member, letter1, lettersO) && A2(_elm_lang$core$List$member, letter2, lettersO)) || (A2(_elm_lang$core$List$member, letter1, lettersU) && A2(_elm_lang$core$List$member, letter2, lettersU))))));
+	});
 var _jpvillaisaza$hangman$Hangman$toLetters = function (word) {
 	return A2(
 		_elm_lang$core$List$map,
@@ -10331,7 +10382,7 @@ var _jpvillaisaza$hangman$Hangman$guess = F2(
 				var _p7 = _p6.letter;
 				return {
 					letter: _p7,
-					guessed: _elm_lang$core$Native_Utils.eq(guess, _p7) || _p6.guessed
+					guessed: A2(_jpvillaisaza$hangman$Hangman$checkLetter, guess, _p7) || _p6.guessed
 				};
 			});
 		var letters = A2(
