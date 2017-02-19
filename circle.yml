@@ -8,9 +8,9 @@ dependencies:
 
   override:
     - bundle install --jobs=4
+    - elm make --yes
 
 test:
 
   override:
-    - elm make --yes
     - bundle exec jekyll build
