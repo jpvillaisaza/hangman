@@ -10312,6 +10312,55 @@ var _jpvillaisaza$hangman$Hangman$viewLetters = function (model) {
 			}
 		});
 };
+var _jpvillaisaza$hangman$Hangman$viewGuesses = function (model) {
+	var show = function (g) {
+		return A2(
+			_elm_lang$core$String$contains,
+			_elm_lang$core$String$fromChar(g),
+			model.word) ? A2(
+			_elm_lang$html$Html$span,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'color', _1: 'green'},
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$String$fromChar(g)),
+				_1: {ctor: '[]'}
+			}) : A2(
+			_elm_lang$html$Html$span,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'color', _1: 'red'},
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$String$fromChar(g)),
+				_1: {ctor: '[]'}
+			});
+	};
+	return A2(
+		_elm_lang$html$Html$p,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$List$map,
+			show,
+			_elm_lang$core$Set$toList(model.guesses)));
+};
 var _jpvillaisaza$hangman$Hangman$viewFooter = function (_p4) {
 	var repository = 'https://github.com/jpvillaisaza/hangman';
 	var repositoryLink = A2(
@@ -10743,15 +10792,7 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 								} : {ctor: '[]'}),
 							_1: {
 								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$p,
-									{ctor: '[]'},
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html$text(
-											A3(_elm_lang$core$Set$foldr, _elm_lang$core$String$cons, '', model.guesses)),
-										_1: {ctor: '[]'}
-									}),
+								_0: _jpvillaisaza$hangman$Hangman$viewGuesses(model),
 								_1: {
 									ctor: '::',
 									_0: A2(

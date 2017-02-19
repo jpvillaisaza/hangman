@@ -242,7 +242,7 @@ view model =
         , viewLetters model
         , Html.p [] [Html.text (toString model.status)]
         , Html.p [] (if model.status == Lost || model.status == Won then [viewWord model] else [])
-        , Html.p [] [Html.text (Set.foldr String.cons "" model.guesses)]
+        , viewGuesses model
         , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
         , viewKeyboard
         , viewLanguage model.language
@@ -267,6 +267,26 @@ viewFooter _ =
             [ Html.Attributes.class "footer" ]
             [ Html.p [] [ repositoryLink ]
             ]
+
+
+viewGuesses : Model -> Html msg
+viewGuesses model =
+    let
+        show g =
+            if String.contains (String.fromChar g) model.word then
+                Html.span
+                    [ Html.Attributes.style
+                          [ ("color", "green")
+                          ]
+                    ]
+                    [Html.text (String.fromChar g)]
+            else
+                Html.span
+                    [ Html.Attributes.style [ ("color", "red") ]
+                    ]
+                    [ Html.text (String.fromChar g) ]
+    in
+        Html.p [] (List.map show (Set.toList model.guesses))
 
 
 viewKeyboard : Html Msg
