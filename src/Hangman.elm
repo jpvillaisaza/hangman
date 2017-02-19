@@ -241,9 +241,8 @@ view model =
         [ viewHeader model
         , Html.div
               [ Html.Attributes.class "row" ]
-              [ viewStats model
-              , viewLetters model
-              , viewStatus model
+              [ viewLetters model
+              , viewStats model
               , viewWord model
               , viewGuesses model
               , viewRestart model
@@ -292,7 +291,7 @@ viewGuesses model =
     in
         Html.p
             [ Html.Attributes.class "guesses" ]
-            (List.map show (Set.toList model.guesses))
+            (Html.text "Guesses: ":: List.map show (Set.toList model.guesses))
 
 
 viewHeader : Model -> Html msg
@@ -395,16 +394,25 @@ viewStats : Model -> Html msg
 viewStats model =
     Html.div
         [ Html.Attributes.class "stats" ]
-        [ Html.text ("Wins: " ++ toString model.wins)
-        , Html.text (" (" ++ toString model.games ++ ")")
+        [ viewStatus model
+        , viewHistory model
         ]
 
 
 viewStatus : Model -> Html msg
 viewStatus model =
-    Html.p
+    Html.div
         [ Html.Attributes.class "status" ]
         [ Html.text (toString model.status) ]
+
+
+viewHistory : Model -> Html msg
+viewHistory model =
+    Html.div
+        [ Html.Attributes.class "history" ]
+        [ Html.text ("Wins: " ++ toString model.wins)
+        , Html.text (" (" ++ toString model.games ++ ")")
+        ]
 
 
 viewWord : Model -> Html msg

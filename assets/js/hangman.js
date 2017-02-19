@@ -10229,9 +10229,38 @@ var _jpvillaisaza$hangman$Hangman$viewWord_ = function (model) {
 			_1: {ctor: '[]'}
 		});
 };
+var _jpvillaisaza$hangman$Hangman$viewHistory = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('history'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'Wins: ',
+					_elm_lang$core$Basics$toString(model.wins))),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' (',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(model.games),
+							')'))),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _jpvillaisaza$hangman$Hangman$viewStatus = function (model) {
 	return A2(
-		_elm_lang$html$Html$p,
+		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$class('status'),
@@ -10254,21 +10283,10 @@ var _jpvillaisaza$hangman$Hangman$viewStats = function (model) {
 		},
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html$text(
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					'Wins: ',
-					_elm_lang$core$Basics$toString(model.wins))),
+			_0: _jpvillaisaza$hangman$Hangman$viewStatus(model),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html$text(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						' (',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(model.games),
-							')'))),
+				_0: _jpvillaisaza$hangman$Hangman$viewHistory(model),
 				_1: {ctor: '[]'}
 			}
 		});
@@ -10404,10 +10422,14 @@ var _jpvillaisaza$hangman$Hangman$viewGuesses = function (model) {
 			_0: _elm_lang$html$Html_Attributes$class('guesses'),
 			_1: {ctor: '[]'}
 		},
-		A2(
-			_elm_lang$core$List$map,
-			show,
-			_elm_lang$core$Set$toList(model.guesses)));
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('Guesses: '),
+			_1: A2(
+				_elm_lang$core$List$map,
+				show,
+				_elm_lang$core$Set$toList(model.guesses))
+		});
 };
 var _jpvillaisaza$hangman$Hangman$viewFooter = function (_p4) {
 	var repository = 'https://github.com/jpvillaisaza/hangman';
@@ -10863,30 +10885,26 @@ var _jpvillaisaza$hangman$Hangman$view = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: _jpvillaisaza$hangman$Hangman$viewStats(model),
+						_0: _jpvillaisaza$hangman$Hangman$viewLetters(model),
 						_1: {
 							ctor: '::',
-							_0: _jpvillaisaza$hangman$Hangman$viewLetters(model),
+							_0: _jpvillaisaza$hangman$Hangman$viewStats(model),
 							_1: {
 								ctor: '::',
-								_0: _jpvillaisaza$hangman$Hangman$viewStatus(model),
+								_0: _jpvillaisaza$hangman$Hangman$viewWord(model),
 								_1: {
 									ctor: '::',
-									_0: _jpvillaisaza$hangman$Hangman$viewWord(model),
+									_0: _jpvillaisaza$hangman$Hangman$viewGuesses(model),
 									_1: {
 										ctor: '::',
-										_0: _jpvillaisaza$hangman$Hangman$viewGuesses(model),
+										_0: _jpvillaisaza$hangman$Hangman$viewRestart(model),
 										_1: {
 											ctor: '::',
-											_0: _jpvillaisaza$hangman$Hangman$viewRestart(model),
+											_0: _jpvillaisaza$hangman$Hangman$viewKeyboard,
 											_1: {
 												ctor: '::',
-												_0: _jpvillaisaza$hangman$Hangman$viewKeyboard,
-												_1: {
-													ctor: '::',
-													_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
-													_1: {ctor: '[]'}
-												}
+												_0: _jpvillaisaza$hangman$Hangman$viewLanguage(model.language),
+												_1: {ctor: '[]'}
 											}
 										}
 									}
