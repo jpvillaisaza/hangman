@@ -239,7 +239,7 @@ view model =
     div []
         [ Html.h1 [] [ Html.text "Hangman" ]
         , viewStats model
-        , Html.h2 [] [ Html.text (toStringL model) ]
+        , viewLetters model
         , Html.p [] [Html.text (toString model.status)]
         , Html.p [] (if model.status == Lost || model.status == Won then [viewWord model] else [])
         , Html.p [] [Html.text (Set.foldr String.cons "" model.guesses)]
@@ -248,16 +248,6 @@ view model =
         , viewLanguage model.language
         , viewFooter model
         ]
-
-
-toStringL : Model -> String
-toStringL model =
-    let
-        fromLetter {guessed, letter} =
-            if guessed then letter else '-'
-    in
-        List.map fromLetter model.letters
-            |> List.foldr String.cons ""
 
 
 viewFooter : Model -> Html msg
@@ -324,6 +314,35 @@ viewLanguage currentLanguage =
                   [ Html.Events.onClick (SwitchTo nextLanguage) ]
                   [ Html.text nextLanguageText ]
             ]
+
+
+viewLetters : Model -> Html msg
+viewLetters model =
+    Html.div
+        []
+        [ Html.h2 [] [ Html.text (toStringL model) ]
+        , Html.p [] [Html.text ("(" ++ toLength model.word ++ ")")]
+        ]
+
+
+toStringL : Model -> String
+toStringL model =
+    let
+        fromLetter {guessed, letter} =
+            if guessed then letter else '-'
+    in
+        List.map fromLetter model.letters
+            |> List.foldr String.cons ""
+
+
+toLength : String -> String
+toLength string =
+    case String.length string of
+        1 ->
+            "1 letter"
+
+        n ->
+            toString n ++ " letters"
 
 
 viewStats : Model -> Html msg
