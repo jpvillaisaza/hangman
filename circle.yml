@@ -1,5 +1,8 @@
 dependencies:
 
+  cache_directories:
+    - elm-stuff/build-artifacts/
+
   pre:
     - npm install -g elm
 
