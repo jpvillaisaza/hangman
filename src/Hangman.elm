@@ -120,7 +120,10 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
         Guess c ->
-            (guess c model, Cmd.none)
+            if isPlaying model.status then
+                (guess c model, Cmd.none)
+            else
+                (model, Cmd.none)
 
         Dict (Ok words) ->
             ( model

@@ -10536,11 +10536,11 @@ var _jpvillaisaza$hangman$Hangman$update = F2(
 		var _p12 = msg;
 		switch (_p12.ctor) {
 			case 'Guess':
-				return {
+				return _jpvillaisaza$hangman$Hangman$isPlaying(model.status) ? {
 					ctor: '_Tuple2',
 					_0: A2(_jpvillaisaza$hangman$Hangman$guess, _p12._0, model),
 					_1: _elm_lang$core$Platform_Cmd$none
-				};
+				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'Dict':
 				if (_p12._0.ctor === 'Ok') {
 					return {
