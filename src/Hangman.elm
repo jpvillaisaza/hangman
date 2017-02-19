@@ -236,16 +236,20 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ Html.h1 [] [ Html.text "Hangman" ]
-        , viewStats model
-        , viewLetters model
-        , Html.p [] [Html.text (toString model.status)]
-        , Html.p [] (if model.status == Lost || model.status == Won then [viewWord model] else [])
-        , viewGuesses model
-        , Html.button [Html.Events.onClick Restart] [ Html.text "Restart" ]
-        , viewKeyboard
-        , viewLanguage model.language
+    Html.div
+        [ Html.Attributes.class "container" ]
+        [ viewHeader model
+        , Html.div
+              [ Html.Attributes.class "row" ]
+              [ viewStats model
+              , viewLetters model
+              , viewStatus model
+              , viewWord model
+              , viewGuesses model
+              , viewRestart model
+              , viewKeyboard
+              , viewLanguage model.language
+              ]
         , viewFooter model
         ]
 
@@ -286,7 +290,16 @@ viewGuesses model =
                     ]
                     [ Html.text (String.fromChar g) ]
     in
-        Html.p [] (List.map show (Set.toList model.guesses))
+        Html.p
+            [ Html.Attributes.class "guesses" ]
+            (List.map show (Set.toList model.guesses))
+
+
+viewHeader : Model -> Html msg
+viewHeader model =
+    Html.header
+        [ Html.Attributes.class "header" ]
+        [ Html.h1 [] [ Html.text "Hangman" ]]
 
 
 viewKeyboard : Html Msg
@@ -301,13 +314,15 @@ viewKeyboard =
 
         sd letter =
             Html.button
-                [ Html.Attributes.class "btn btn-default"
+                [ Html.Attributes.class "btn btn-default key"
                 , Html.Events.onClick (Guess letter)
                 ]
                 [ Html.text (String.fromChar letter) ]
 
     in
-        Html.div [] (List.map sd letters)
+        Html.div
+            [ Html.Attributes.class "keyboard" ]
+            (List.map sd letters)
 
 
 viewLanguage : Language -> Html Msg
@@ -326,12 +341,14 @@ viewLanguage currentLanguage =
 
     in
         Html.div
-            []
+            [ Html.Attributes.class "language" ]
             [ Html.p
                   []
                   [ Html.text currentLanguageText ]
             , Html.button
-                  [ Html.Events.onClick (SwitchTo nextLanguage) ]
+                  [ Html.Attributes.class "btn btn-default"
+                  , Html.Events.onClick (SwitchTo nextLanguage)
+                  ]
                   [ Html.text nextLanguageText ]
             ]
 
@@ -339,7 +356,7 @@ viewLanguage currentLanguage =
 viewLetters : Model -> Html msg
 viewLetters model =
     Html.div
-        []
+        [ Html.Attributes.class "letters" ]
         [ Html.h2 [] [ Html.text (toStringL model) ]
         , Html.p [] [Html.text ("(" ++ toLength model.word ++ ")")]
         ]
@@ -365,17 +382,40 @@ toLength string =
             toString n ++ " letters"
 
 
+viewRestart : Model -> Html Msg
+viewRestart model =
+    Html.button
+        [ Html.Attributes.class "btn btn-default restart"
+        , Html.Events.onClick Restart
+        ]
+        [ Html.text "Restart" ]
+
+
 viewStats : Model -> Html msg
 viewStats model =
     Html.div
-        []
+        [ Html.Attributes.class "stats" ]
         [ Html.text ("Wins: " ++ toString model.wins)
         , Html.text (" (" ++ toString model.games ++ ")")
         ]
 
 
+viewStatus : Model -> Html msg
+viewStatus model =
+    Html.p
+        [ Html.Attributes.class "status" ]
+        [ Html.text (toString model.status) ]
+
+
 viewWord : Model -> Html msg
 viewWord model =
+    Html.p
+        [ Html.Attributes.class "word" ]
+        (if model.status == Lost || model.status == Won then [viewWord_ model] else [])
+
+
+viewWord_ : Model -> Html msg
+viewWord_ model =
     let
         base =
             case model.language of

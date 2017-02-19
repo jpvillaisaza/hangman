@@ -1,4 +1,58 @@
 body {
-  max-width: 550px;
+  font-family: Roboto, sans-serif;
+}
+
+.container {
+  margin: auto;
+  max-width: 500px;
+}
+
+.header {
+  margin: 10px;
+  padding: 10px;
   text-align: center;
+}
+
+.row {
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer {
+  border-top: thin solid gray;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.stats {
+}
+
+.letters {
+}
+
+.status {
+}
+
+.word {
+}
+
+.guesses {
+}
+
+button.restart {
+}
+
+.keyboard {
+  margin: 5px;
+  padding: 5px;
+}
+
+button.key {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.language {
 }
