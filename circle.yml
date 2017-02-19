@@ -1,0 +1,13 @@
+dependencies:
+
+  pre:
+    - npm install -g elm
+
+  override:
+    - bundle install --jobs=4
+
+test:
+
+  override:
+    - elm make --yes
+    - bundle exec jekyll build
