@@ -265,7 +265,9 @@ viewFooter _ =
 
         repositoryLink =
             Html.a
-                [ Html.Attributes.href repository ]
+                [ Html.Attributes.href repository
+                , Html.Attributes.target "_blank"
+                ]
                 [ Html.text repository ]
     in
         Html.footer
@@ -342,5 +344,7 @@ viewWord model =
                     "http://dirae.es/palabras/"
     in
         Html.a
-            [ Html.Attributes.href (base ++ model.word) ]
+            [ Html.Attributes.href (base ++ model.word)
+            , Html.Attributes.target "_blank"
+            ]
             [ Html.text model.word ]

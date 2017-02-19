@@ -10217,7 +10217,11 @@ var _jpvillaisaza$hangman$Hangman$viewWord = function (model) {
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$href(
 				A2(_elm_lang$core$Basics_ops['++'], base, model.word)),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$target('_blank'),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
@@ -10257,7 +10261,11 @@ var _jpvillaisaza$hangman$Hangman$viewFooter = function (_p1) {
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$href(repository),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$target('_blank'),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
