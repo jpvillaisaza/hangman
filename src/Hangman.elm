@@ -145,9 +145,16 @@ update msg model =
 
 
         Restart ->
-            ( { model | games = model.games + 1 }
-            , Http.send Dict (getWords model.language)
-            )
+            let
+                sd =
+                    if isPlaying model.status then
+                        model.games + 1
+                    else
+                        model.games + 0
+            in
+                ( { model | games = sd }
+                , Http.send Dict (getWords model.language)
+                )
 
         SwitchTo language ->
             ( { model | language = language }

@@ -10779,11 +10779,12 @@ var _jpvillaisaza$hangman$Hangman$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Restart':
+				var sd = _jpvillaisaza$hangman$Hangman$isPlaying(model.status) ? (model.games + 1) : (model.games + 0);
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{games: model.games + 1}),
+						{games: sd}),
 					_1: A2(
 						_elm_lang$http$Http$send,
 						_jpvillaisaza$hangman$Hangman$Dict,
