@@ -86,8 +86,20 @@ isPlaying status =
 
 toLetters : String -> List Letter
 toLetters word =
-    String.foldr (::) [] word
-        |> List.map (\letter -> {guessed = False, letter = letter})
+    let
+        guessed letter =
+            List.member letter
+                [ ' '
+                , '-'
+                ]
+
+        makeLetter letter =
+            { guessed = guessed letter
+            , letter = letter
+            }
+    in
+        String.foldr (::) [] word
+            |> List.map makeLetter
 
 
 init : String -> (Model, Cmd Msg)

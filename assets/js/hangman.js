@@ -10518,11 +10518,29 @@ var _jpvillaisaza$hangman$Hangman$checkLetter = F2(
 		return _elm_lang$core$Native_Utils.eq(letter1, letter2) || ((A2(_elm_lang$core$List$member, letter1, lettersA) && A2(_elm_lang$core$List$member, letter2, lettersA)) || ((A2(_elm_lang$core$List$member, letter1, lettersE) && A2(_elm_lang$core$List$member, letter2, lettersE)) || ((A2(_elm_lang$core$List$member, letter1, lettersI) && A2(_elm_lang$core$List$member, letter2, lettersI)) || ((A2(_elm_lang$core$List$member, letter1, lettersO) && A2(_elm_lang$core$List$member, letter2, lettersO)) || (A2(_elm_lang$core$List$member, letter1, lettersU) && A2(_elm_lang$core$List$member, letter2, lettersU))))));
 	});
 var _jpvillaisaza$hangman$Hangman$toLetters = function (word) {
+	var guessed = function (letter) {
+		return A2(
+			_elm_lang$core$List$member,
+			letter,
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.chr(' '),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Native_Utils.chr('-'),
+					_1: {ctor: '[]'}
+				}
+			});
+	};
+	var makeLetter = function (letter) {
+		return {
+			guessed: guessed(letter),
+			letter: letter
+		};
+	};
 	return A2(
 		_elm_lang$core$List$map,
-		function (letter) {
-			return {guessed: false, letter: letter};
-		},
+		makeLetter,
 		A3(
 			_elm_lang$core$String$foldr,
 			F2(
