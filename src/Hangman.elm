@@ -47,10 +47,10 @@ getWords language =
 
 
 type alias Model =
-    { games : Int
-    , guesses : Set Char
+    { guesses : Set Char
     , language : Language
     , letters : List Letter
+    , losses : Int
     , status : Status
     , wins : Int
     , word : String
@@ -94,10 +94,10 @@ init : String -> (Model, Cmd Msg)
 init word =
     let
         model =
-            { games = 0
-            , guesses = Set.empty
+            { guesses = Set.empty
             , language = Spanish
             , letters = toLetters word
+            , losses = 0
             , status = Playing 5
             , wins = 0
             , word = word
@@ -148,11 +148,11 @@ update msg model =
             let
                 sd =
                     if isPlaying model.status then
-                        model.games + 1
+                        model.losses + 1
                     else
-                        model.games + 0
+                        model.losses
             in
-                ( { model | games = sd }
+                ( { model | losses = sd }
                 , Http.send Dict (getWords model.language)
                 )
 
@@ -192,9 +192,9 @@ guess guess model =
                     model.status
     in
         { model
-            | games = if status == Won || status == Lost then model.games + 1 else model.games
-            , guesses = Set.insert guess model.guesses
+            | guesses = Set.insert guess model.guesses
             , letters = letters
+            , losses = if status == Lost then model.losses + 1 else model.losses
             , status = status
             , wins = if status == Won then model.wins + 1 else model.wins
         }
@@ -418,7 +418,7 @@ viewHistory model =
     Html.div
         [ Html.Attributes.class "history" ]
         [ Html.text ("Wins: " ++ toString model.wins)
-        , Html.text (" (" ++ toString model.games ++ ")")
+        , Html.text (" - Losses: " ++ toString model.losses)
         ]
 
 
