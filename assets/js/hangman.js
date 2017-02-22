@@ -10811,7 +10811,7 @@ var _jpvillaisaza$hangman$Hangman$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{language: _p15}),
+						{language: _p15, losses: 0, wins: 0}),
 					_1: A2(
 						_elm_lang$http$Http$send,
 						_jpvillaisaza$hangman$Hangman$Dict,

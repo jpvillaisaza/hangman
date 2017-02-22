@@ -169,7 +169,11 @@ update msg model =
                 )
 
         SwitchTo language ->
-            ( { model | language = language }
+            ( { model
+                  | language = language
+                  , losses = 0
+                  , wins = 0
+              }
             , Http.send Dict (getWords language)
             )
 
