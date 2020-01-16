@@ -14,8 +14,8 @@ jobs:
       - image: circleci/node:6
     steps:
       - checkout
-      - run: sudo npm install -g elm
-      - run: sudo npm install -g elm-test
+      - run: sudo npm install -g elm@0.18.0
+      # - run: sudo npm install -g elm-test
       - run: elm make --yes
       # - run: elm test
 
